@@ -87,10 +87,5 @@ public class Pokemon implements LevelUp{
                     s + "\t    Speed   \t" + speed;
             return j;
     }
-    public Boolean compareSpeed(pk){
-        if(pk instanceof Pokemon){
-
-        }
-    }
 }
 
