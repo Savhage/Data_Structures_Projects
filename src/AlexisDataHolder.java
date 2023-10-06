@@ -1,4 +1,4 @@
-public class AlexisDataHolder {
+/*public class AlexisDataHolder implements DataTraverser {
     String[] names;
     int a=3,position =0, size ;
     public AlexisDataHolder(){
@@ -91,5 +91,14 @@ public class AlexisDataHolder {
         }
         return check;
     }
+    public String next(int i){
+        return names[i];
+    }public Boolean hasNext(int i){
+        Boolean check=false;
+        if (i<size){
+            check=true;
+        }
+        return check;
+    }
 
-}
+}*/
