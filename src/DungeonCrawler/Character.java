@@ -1,36 +1,52 @@
 package DungeonCrawler;
 
 import java.util.Random;
-public class Character {
+public class Character extends Entity{
     private int mLife, life, attack,defense,speed,money,lvl,experience;
     Random r=new Random();
     /*
     Used to create the Hero DungeonCrawler.Character.
      */
-    public Character(int l,int a, int d, int s,int m){
-        mLife=l;
-        life=l;
-        attack=a;
-        defense=d;
-        speed=s;
-        money=m;
+    public Character(){
+        super("Hero");
+        mLife=r.nextInt(20,35);
+        life=mLife;
+        attack=r.nextInt(8,12);
+        defense=r.nextInt(2,5);
+        speed=r.nextInt(3,12);
+        money=r.nextInt(0,21);
         lvl=1;
         experience=0;
 
+    }
+    public Character(int l){
+        super("Hero");
+        lvl=l;
+        mLife=lvl*r.nextInt(8,21);
+        life=mLife;
+        attack=lvl*r.nextInt(3,6);
+        defense=lvl*r.nextInt(2,5);
+        speed=lvl*r.nextInt(3,12);
+        money=lvl*r.nextInt(0,21);
+        experience=0;
     }
     /*
     Used when creating monsters to scale them randomly to Hero's level
      */
     public Character(Character hero){
-        int l=hero.getLvl();
-        lvl=l+r.nextInt(0,3);
-        mLife=lvl*r.nextInt(1,21);
-        life=mLife;
-        attack=lvl*r.nextInt(1,6);
-        defense=lvl*r.nextInt(1,5);
-        speed=lvl*r.nextInt(3,12);
-        money=lvl*r.nextInt(0,21);
-        experience=lvl*r.nextInt(1,4);
+            super("Slime");
+            int l=hero.getLvl();
+            lvl=l+r.nextInt(2);
+            mLife=lvl*r.nextInt(5,10);
+            life=mLife;
+            attack=lvl*r.nextInt(2,6);
+            defense=lvl*r.nextInt(2,5);
+            speed=lvl*r.nextInt(3,12);
+            money=lvl*r.nextInt(0,21);
+            experience=lvl*r.nextInt(1,4);
+    }
+    public int getMLife(){
+        return mLife;
     }
     public int getLife() {
         return life;
@@ -49,11 +65,17 @@ public class Character {
     public int getAttack() {
         return attack;
     }
+    public void increaseAttack(int h){
+        attack+=h;
+    }
     public int getDefense() {
         return defense;
     }
     public int getSpeed() {
         return speed;
+    }
+    public void increaseSpeed(int h){
+        speed+=h;
     }
     public int getMoney() {
         return money;
@@ -64,7 +86,7 @@ public class Character {
     public int getExperience(){
         return experience;
     }
-    public void battle(Character enemy){
+    public void battle(Entity enemy){
         if(compareSpeed(enemy)) {
             attack(enemy);
 
@@ -73,15 +95,15 @@ public class Character {
             defend(enemy);
         }
     }
-    private boolean compareSpeed(Character enemy) {
+    private boolean compareSpeed(Entity enemy) {
         boolean check= false;
         if (speed > enemy.getSpeed()){
             check=true;
         }
         return check;
     }
-    private void attack(Character enemy){
-        System.out.println("You are faster than the SLIME!");
+    private void attack(Entity enemy){
+        System.out.println("You are faster than the SLIME!\n");
         while (checkLife() && enemy.checkLife()) {
             System.out.println("You attack the slime!!");
             int damage = attack - (enemy.getDefense() / 2);
@@ -98,7 +120,7 @@ public class Character {
                 System.out.println("You took "+ harm+ " damage!!");
                 takeDamage(harm);
                 if(life<=0){
-                    System.out.println("You have taken lethal damage!!! The pearly gate await!!!");
+                    System.out.println("You have taken lethal damage!!! The pearly gates await!!!");
                 }
                 else{
                     System.out.println("You now have"+life+" health!!\n");
@@ -106,8 +128,8 @@ public class Character {
             }
         }
     }
-    private void defend(Character enemy){
-        System.out.println("The SLIME is quicker than you!!");
+    private void defend(Entity enemy){
+        System.out.println("The SLIME is quicker than you!!\n");
         while (checkLife() && enemy.checkLife()) {
             System.out.println("The SlIME attacks!!");
             int harm=enemy.getAttack()-(defense/2);
@@ -123,7 +145,7 @@ public class Character {
                 System.out.println("The SLIME takes " + damage + " damage!!");
                 enemy.takeDamage(damage);
                 if (enemy.getLife()<=0){
-                    System.out.println("You have slain the SLIME!!");
+                    System.out.println("You have slain the SLIME!!\n");
                     gainExperience(enemy);
                 }
                 else{
@@ -139,9 +161,9 @@ public class Character {
         }
         return check;
     }
-    public void gainExperience(Character enemy){
+    public void gainExperience(Entity enemy){
         experience+=enemy.getExperience();
-        System.out.println("You have gained "+ enemy.getExperience()+" experience!!");
+        System.out.println("You have gained "+ enemy.getExperience()+" experience!!\n");
         checkLevelUp();
     }
     /*
