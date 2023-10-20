@@ -2,29 +2,50 @@ package DungeonCrawler;
 import java.util.Random;
 public class Dungeon {
     DungeonRoom left, right;
-    String[] mapL=new String[6];
-    String[] mapR=new String[6];
+    private boolean out;
+    private String[] mapL=new String[7];
+    private String[] mapR=new String[7];
     Random r=new Random();
-    public Dungeon(Character hero){
+    public Dungeon(int floor){
 
-        for (int i=0;i<12;i++){
-            DungeonRoom newRoom=new DungeonRoom(hero);
+        for (int i=0;i<7;i++) {
+            DungeonRoom newRoom = new DungeonRoom(floor);
 
-            if (left==null){
-                left=newRoom;
-                right=newRoom;
+            if (left == null) {
+                left = newRoom;
+                right = newRoom;
+            } else {
+                newRoom.left = left;
+                newRoom.right = right;
+                right.left=newRoom;
+                left.right = newRoom;
+                left = newRoom;
             }
-            else{
-                newRoom.left=left;
-                newRoom.right=right;
-                left.right=newRoom;
-                left=newRoom;
-                }
+        }
+        DungeonRoom exitRoom=new DungeonRoom();
+        exitRoom.left=left;
+        exitRoom.right=right;
+        right.left=exitRoom;
+        left.right=exitRoom;
+        left=exitRoom;
+        for (int i=0;i<6;i++) {
+            DungeonRoom newRoom = new DungeonRoom(floor);
+
+            if (left == null) {
+                left = newRoom;
+                right = newRoom;
+            } else {
+                newRoom.left = left;
+                newRoom.right = right;
+                right.left = newRoom;
+                left.right = newRoom;
+                left = newRoom;
+            }
         }
         DungeonRoom r,l;
         l=left;
         r=right;
-        for (int i=0;i<6;i++) {
+        for (int i=0;i<7;i++) {
             mapL[i] = l.getInside().getDescription();
             mapR[i] = r.getInside().getDescription();
             l = l.left;
@@ -73,12 +94,24 @@ public class Dungeon {
         } else if (interior.getInside() instanceof Item) {
             interior.getInside().getItem(hero);
         }
-        else{
+        else if (interior.getInside() instanceof Trap){
             interior.getInside().setTrap(hero);
         }
+        else{
+            out=false;
+        }
+    }
+    public boolean getOut(){
+        return out;
+    }
+    public void setOut(){
+        out=true;
     }
     public String toString(){
-        String j=   "      |            |   \n" +
+        String j=   "   ["+mapL[6]+"]   --  ["+mapR[6]+"]\n"+
+                "      |            |   \n" +
+                    "   ["+mapL[5]+"]       ["+mapR[5]+"]\n"+
+                    "      |            |   \n" +
                     "   ["+mapL[4]+"]       ["+mapR[4]+"]\n"+
                     "      |            |   \n" +
                     "   ["+mapL[4]+"]       ["+mapR[4]+"]\n"+

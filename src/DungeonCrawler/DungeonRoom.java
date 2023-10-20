@@ -6,16 +6,19 @@ public class DungeonRoom{
     DungeonRoom left,right;
     Random r=new Random();
 
-    public DungeonRoom(Character hero){
+    public DungeonRoom(int floor){
         int rand=r.nextInt(20);
         if (rand<10){
-            inside=new Character(hero);
+            inside=new Character(floor);
         } else if (rand<16) {
             inside=new Trap();
         }
         else{
             inside=new Item();
         }
+    }
+    public DungeonRoom(){
+        inside=new Exit();
     }
     public String inRoom(){
         return inside.getDescription();

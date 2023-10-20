@@ -19,31 +19,30 @@ public class Character extends Entity{
         experience=0;
 
     }
-    public Character(int l){
+    public Character(int l,int m, int a, int d, int s, int mO, int e){
         super("Hero");
         lvl=l;
-        mLife=lvl*r.nextInt(8,21);
-        life=mLife;
-        attack=lvl*r.nextInt(3,6);
-        defense=lvl*r.nextInt(2,5);
-        speed=lvl*r.nextInt(3,12);
-        money=lvl*r.nextInt(0,21);
-        experience=0;
+        mLife=m;
+        life=m;
+        attack=a;
+        defense=d;
+        speed=s;
+        money=mO;
+        experience=e;
     }
     /*
     Used when creating monsters to scale them randomly to Hero's level
      */
-    public Character(Character hero){
+    public Character(int n){
             super("Slime");
-            int l=hero.getLvl();
-            lvl=l+r.nextInt(2);
-            mLife=lvl*r.nextInt(5,10);
+            lvl=n+r.nextInt(2);
+            mLife=n*r.nextInt(10,15);
             life=mLife;
-            attack=lvl*r.nextInt(2,6);
-            defense=lvl*r.nextInt(2,5);
-            speed=lvl*r.nextInt(3,12);
-            money=lvl*r.nextInt(0,21);
-            experience=lvl*r.nextInt(1,4);
+            attack=n*r.nextInt(3,5);
+            defense=n*r.nextInt(3,6);
+            speed=n*r.nextInt(10,35);
+            money=n*r.nextInt(0,21);
+            experience=n*r.nextInt(1,6);
     }
     public int getMLife(){
         return mLife;
@@ -182,7 +181,7 @@ public class Character extends Entity{
     private void levelUp() {
         lvl+=1;
         mLife+=lvl+r.nextInt(1,21);
-        life+=mLife;
+        life=mLife;
         attack+=lvl+r.nextInt(1,6);
         defense+=lvl+r.nextInt(1,11);
         speed+=lvl+r.nextInt(3,12);
@@ -202,7 +201,8 @@ public class Character extends Entity{
                     "\nSpeed..........."+ speed+
                     "\nLevel..........."+lvl+
                     "\nExperience......"+ experience+
-                    "\nTo next level..."+ nextLevel();
+                    "\nTo next level..."+ nextLevel()+
+                    "\n";
         return s;
     }
 }

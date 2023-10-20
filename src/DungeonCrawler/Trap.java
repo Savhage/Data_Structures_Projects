@@ -14,7 +14,7 @@ public class Trap extends Entity{
             damage=hero.getMLife()/20;
             hero.takeDamage(damage);
             System.out.println("You take an arrow to the shoulder and take "+ damage+" damage!!!");
-            System.out.println("Your attacks has also been reduced by 5!!");
+            System.out.println("Your attacks have also been reduced by 5!!\n");
             hero.increaseAttack(-5);
         }
         else if (rand<15) {
@@ -26,11 +26,11 @@ public class Trap extends Entity{
             hero.increaseSpeed(-5);
             System.out.println("You land hard and take "+damage+" damage!!" +
                     "\nYou wince in pain as you place pressure on your leg!!" +
-                    "\nYour speed has been reduced by 5!!");
+                    "\nYour speed has been reduced by 5!!\n");
         }
         else {
             System.out.println("As you walk through the room an arrow shoots out of the wall!!!" +
-                    "\nYou manage to dive out of the way, avoiding any damage!!!");
+                    "\nYou manage to dive out of the way, avoiding any damage!!!\n");
         }
     }
 }
