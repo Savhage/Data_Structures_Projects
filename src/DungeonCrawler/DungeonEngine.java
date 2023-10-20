@@ -1,13 +1,11 @@
 package DungeonCrawler;
 import java.util.Scanner;
-import java.util.Random;
 import java.io.*;
 public class DungeonEngine {
     Character hero;
     Dungeon depths;
     private int choice,floor;
     Scanner input=new Scanner(System.in);
-    Random r=new Random();
     public void runGame() throws IOException{
 
         System.out.println("Welcome traveler to my dungeon!! " +
@@ -137,7 +135,6 @@ public class DungeonEngine {
     }
     public void saveHero(Character hero)throws IOException{
         PrintWriter save=new PrintWriter("Dungeon_Save.txt");
-        int[] stats=new int[7];
         save.println(hero.getLvl());
         save.println(hero.getMLife());
         save.println(hero.getAttack());
